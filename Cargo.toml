@@ -1,0 +1,68 @@
+[package]
+name = "crypto-bigint"
+version = "0.6.0-rc.6"
+description = """
+Pure Rust implementation of a big integer library which has been designed from
+the ground-up for use in cryptographic applications. Provides constant-time,
+no_std-friendly implementations of modern formulas using const generics.
+"""
+authors = ["RustCrypto Developers"]
+license = "Apache-2.0 OR MIT"
+repository = "https://github.com/RustCrypto/crypto-bigint"
+categories = ["algorithms", "cryptography", "data-structures", "mathematics", "no-std"]
+keywords = ["arbitrary", "crypto", "bignum", "integer", "precision"]
+readme = "README.md"
+resolver = "2"
+edition = "2021"
+rust-version = "1.81"
+
+[dependencies]
+
+[dev-dependencies]
+bincode = "1"
+criterion = { version = "0.5", features = ["html_reports"] }
+hex-literal = "0.4"
+num-bigint = "0.4"
+num-integer = "0.1"
+num-modular = { version = "0.6", features = ["num-bigint", "num-integer", "num-traits"] }
+proptest = "1"
+rand_core = { version = "0.6", features = ["std"] }
+rand_chacha = "0.3"
+
+[features]
+default = ["rand"]
+alloc = ["serdect?/alloc"]
+
+extra-sizes = []
+rand = ["rand_core/std"]
+serde = ["dep:serdect"]
+
+[package.metadata.docs.rs]
+all-features = true
+rustdoc-args = ["--cfg", "docsrs"]
+
+[[bench]]
+name = "boxed_monty"
+harness = false
+required-features = ["alloc"]
+
+[[bench]]
+name = "boxed_uint"
+harness = false
+required-features = ["alloc"]
+
+[[bench]]
+name = "const_monty"
+harness = false
+
+[[bench]]
+name = "limb"
+harness = false
+
+[[bench]]
+name = "monty"
+harness = false
+
+[[bench]]
+name = "uint"
+harness = false
